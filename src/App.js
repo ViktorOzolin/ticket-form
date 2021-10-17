@@ -44,7 +44,7 @@ const App = () => {
           onRemovePassenger={onRemovePassenger}
           fetchToggleHandler={fetchToggleHandler}
           defaultPassengersCountHandler={defaultPassengersCountHandler}
-          messages={messages}
+          messages={messages.message}
           setMessageHandler={setMessageHandler}
         />
       )}

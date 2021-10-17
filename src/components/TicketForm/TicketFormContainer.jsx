@@ -41,11 +41,13 @@ const TicketFormContainer = ({
         ticketFormAPI
           .sendData(formData)
           .then((response) => {
-            setMessageHandler("Места успешно зарезервированны!");
+            let message = {type: "ok",message: "Места успешно зарезервированны!" }
+            setMessageHandler(message);
             fetchToggleHandler(false);
           })
           .catch((error) => {
-            setMessageHandler("Ошибка отправки данных на сервер");
+            let message = {type: "error",message: "Ошибка отправки данных на сервер" }
+            setMessageHandler(message);
             fetchToggleHandler(false);
             console.log(error);
           });
