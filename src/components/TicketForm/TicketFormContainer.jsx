@@ -43,7 +43,6 @@ const TicketFormContainer = ({
       }
     }
     if (validatedFormCount === passengerNumber.length) {
-      debugger;
       if (isMounted) {
         fetchToggleHandler(true);
         ticketFormAPI
@@ -79,7 +78,6 @@ const TicketFormContainer = ({
     setMessageHandler,
   ]);
   async function handleSubmit() {
-    debugger;
     passengerNumber.map((item) => {
       switch (item) {
         case 1:
