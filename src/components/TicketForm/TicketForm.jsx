@@ -20,8 +20,7 @@ const TicketForm = ({
   onChange,
   refId,
   passengerNumber,
-  onRemovePassenger,
-  message,
+  onRemovePassenger
 }) => {
   const formik = useFormik({
     initialValues: {

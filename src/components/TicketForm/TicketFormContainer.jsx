@@ -20,10 +20,17 @@ const TicketFormContainer = ({
   };
   const [formData, setFormData] = React.useState(initialState);
 
-  const formAref = React.useRef();
-  const formBref = React.useRef();
-  const formCref = React.useRef();
-  const formDref = React.useRef();
+  // const formAref = React.useRef();
+  // const formBref = React.useRef();
+  // const formCref = React.useRef();
+  // const formDref = React.useRef();
+
+  const refs = {
+    formAref: React.useRef(),
+    formBref: React.useRef(),
+    formCref: React.useRef(),
+    formDref: React.useRef(),
+  };
 
   React.useEffect(() => {
     let isMounted = true;
@@ -36,17 +43,24 @@ const TicketFormContainer = ({
       }
     }
     if (validatedFormCount === passengerNumber.length) {
+      debugger;
       if (isMounted) {
         fetchToggleHandler(true);
         ticketFormAPI
           .sendData(formData)
           .then((response) => {
-            let message = {type: "ok",message: "Места успешно зарезервированны!" }
+            let message = {
+              type: "ok",
+              message: "Места успешно зарезервированны!",
+            };
             setMessageHandler(message);
             fetchToggleHandler(false);
           })
           .catch((error) => {
-            let message = {type: "error",message: "Ошибка отправки данных на сервер" }
+            let message = {
+              type: "error",
+              message: "Ошибка отправки данных на сервер",
+            };
             setMessageHandler(message);
             fetchToggleHandler(false);
             console.log(error);
@@ -65,28 +79,21 @@ const TicketFormContainer = ({
     setMessageHandler,
   ]);
   async function handleSubmit() {
-    const length = passengerNumber.length;
-    const refsSubmit = {
-      1:
-        typeof formAref.current === "undefined"
-          ? null
-          : await formAref.current.Submit,
-      2:
-        typeof formBref.current === "undefined"
-          ? null
-          : await formBref.current.Submit,
-      3:
-        typeof formCref.current === "undefined"
-          ? null
-          : await formCref.current.Submit,
-      4:
-        typeof formDref.current === "undefined"
-          ? null
-          : await formDref.current.Submit,
-    };
-    for (let i = 1; i <= length; i++) {
-      refsSubmit[i]();
-    }
+    debugger;
+    passengerNumber.map((item) => {
+      switch (item) {
+        case 1:
+          return refs.formAref.current.Submit();
+        case 2:
+          return refs.formBref.current.Submit();
+        case 3:
+          return refs.formCref.current.Submit();
+        case 4:
+          return refs.formDref.current.Submit();
+        default:
+          return "";
+      }
+    });
   }
 
   function handleChangeFormA(data, resetForm) {
@@ -105,7 +112,6 @@ const TicketFormContainer = ({
     setFormData({ ...formData, formD: data });
     resetForm();
   }
-  console.log(messages);
   return (
     <React.Fragment>
       {passengerNumber.map((item) => {
@@ -115,7 +121,7 @@ const TicketFormContainer = ({
               <TicketForm
                 key={item}
                 onChange={handleChangeFormA}
-                refId={formAref}
+                refId={refs.formAref}
                 passengerNumber={item}
                 onRemovePassenger={onRemovePassenger}
               />
@@ -125,7 +131,7 @@ const TicketFormContainer = ({
               <TicketForm
                 key={item}
                 onChange={handleChangeFormB}
-                refId={formBref}
+                refId={refs.formBref}
                 passengerNumber={item}
                 onRemovePassenger={onRemovePassenger}
               />
@@ -135,7 +141,7 @@ const TicketFormContainer = ({
               <TicketForm
                 key={item}
                 onChange={handleChangeFormC}
-                refId={formCref}
+                refId={refs.formCref}
                 passengerNumber={item}
                 onRemovePassenger={onRemovePassenger}
               />
@@ -145,7 +151,7 @@ const TicketFormContainer = ({
               <TicketForm
                 key={item}
                 onChange={handleChangeFormD}
-                refId={formDref}
+                refId={refs.formDref}
                 passengerNumber={item}
                 onRemovePassenger={onRemovePassenger}
                 defaultPassengersCountHandler={defaultPassengersCountHandler}
