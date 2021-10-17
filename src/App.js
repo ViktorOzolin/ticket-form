@@ -6,7 +6,7 @@ import { Global } from "./globalStyles";
 const App = () => {
   const [passengers, setPassengers] = useState([1]);
   const [isFetching, setIsFetching] = useState(false);
-  const [messages, setMessages] = useState("");
+  const [messages, setMessages] = useState({type: "", message: ""});
   const onAddPassenger = (event) => {
     event.preventDefault();
     if (passengers.length < 4) {
@@ -28,7 +28,9 @@ const App = () => {
     setIsFetching(isFetch);
   };
   const setMessageHandler = (message) => {
-    setMessages(message);
+    setMessages(prev => ({
+      ...message
+    }));
   };
   return (
     <div className="App">
