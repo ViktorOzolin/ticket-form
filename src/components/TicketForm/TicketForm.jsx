@@ -22,6 +22,7 @@ const TicketForm = ({
   passengerNumber,
   onRemovePassenger
 }) => {
+
   const formik = useFormik({
     initialValues: {
       isFSS: false,

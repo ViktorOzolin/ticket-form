@@ -1,30 +1,44 @@
-import React from "react";
+import React, { useCallback } from "react";
 import TicketForm from "./TicketForm";
-import { ticketFormAPI } from "../../api/api";
-import { Button, Container, Row } from "./styles/TicketFormElements";
 import Message from "../Message/Message";
-const TicketFormContainer = ({
-  passengerNumber,
-  onAddPassenger,
-  onRemovePassenger,
-  fetchToggleHandler,
-  defaultPassengersCountHandler,
-  setMessageHandler,
-  messages,
-}) => {
-  const initialState = {
-    formA: { values: null, validated: false },
-    formB: { values: null, validated: false },
-    formC: { values: null, validated: false },
-    formD: { values: null, validated: false },
+import { Button, Container, Row } from "./styles/TicketFormElements";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addPassenger,
+  removePassenger,
+  setFormData,
+  sendFormData,
+  isSendToggle,
+} from "../../store/ticketFormSlice";
+
+const TicketFormContainer = () => {
+  const passengerNumber = useSelector((state) => state.ticketForm.passengers);
+  const formData = useSelector((state) => state.ticketForm.formData);
+  const message = useSelector((state) => state.ticketForm.messages.text);
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  console.log(state);
+
+  const onAddPassenger = (event) => {
+    dispatch(addPassenger());
   };
-  const [formData, setFormData] = React.useState(initialState);
+  const onRemovePassenger = (event, number) => {
+    dispatch(removePassenger({ number }));
+  };
+  const defaultPassengersCountHandler = () => {};
 
-  // const formAref = React.useRef();
-  // const formBref = React.useRef();
-  // const formCref = React.useRef();
-  // const formDref = React.useRef();
+  // const sendDataHandler = (formData) => {
 
+  //   dispatch(sendFormData(formData));
+  // };
+  const sendDataHandler = useCallback(
+    (formData) => {
+      dispatch(isSendToggle(true))
+      dispatch(sendFormData(formData));
+      dispatch(isSendToggle(false))
+    },
+    [dispatch]
+  );
   const refs = {
     formAref: React.useRef(),
     formBref: React.useRef(),
@@ -33,7 +47,6 @@ const TicketFormContainer = ({
   };
 
   React.useEffect(() => {
-    let isMounted = true;
     let validatedFormCount = 0;
     for (let key in formData) {
       if (formData.hasOwnProperty(key)) {
@@ -43,43 +56,15 @@ const TicketFormContainer = ({
       }
     }
     if (validatedFormCount === passengerNumber.length) {
-      if (isMounted) {
-        fetchToggleHandler(true);
-        ticketFormAPI
-          .sendData(formData)
-          .then((response) => {
-            let message = {
-              type: "ok",
-              message: "Места успешно зарезервированны!",
-            };
-            setMessageHandler(message);
-            fetchToggleHandler(false);
-          })
-          .catch((error) => {
-            let message = {
-              type: "error",
-              message: "Ошибка отправки данных на сервер",
-            };
-            setMessageHandler(message);
-            fetchToggleHandler(false);
-            console.log(error);
-          });
-        defaultPassengersCountHandler();
-      }
+
+      sendDataHandler(formData);
     }
-    return () => {
-      isMounted = false;
-    };
-  }, [
-    formData,
-    defaultPassengersCountHandler,
-    fetchToggleHandler,
-    passengerNumber,
-    setMessageHandler,
-  ]);
+    
+  }, [formData, passengerNumber.length, sendDataHandler]);
+
   async function handleSubmit() {
-    passengerNumber.map((item) => {
-      switch (item) {
+    passengerNumber.map((number) => {
+      switch (number) {
         case 1:
           return refs.formAref.current.Submit();
         case 2:
@@ -94,63 +79,63 @@ const TicketFormContainer = ({
     });
   }
 
-  function handleChangeFormA(data, resetForm) {
-    setFormData({ ...formData, formA: data });
+  const handleChangeFormA = (data, resetForm) => {
+    dispatch(setFormData({ ...formData, formA: data }));
     resetForm();
-  }
-  function handleChangeFormB(data, resetForm) {
-    setFormData({ ...formData, formB: data });
+  };
+  const handleChangeFormB = (data, resetForm) => {
+    dispatch(setFormData({ ...formData, formB: data }));
     resetForm();
-  }
-  function handleChangeFormC(data, resetForm) {
-    setFormData({ ...formData, formC: data });
+  };
+  const handleChangeFormC = (data, resetForm) => {
+    dispatch(setFormData({ ...formData, formC: data }));
     resetForm();
-  }
-  function handleChangeFormD(data, resetForm) {
-    setFormData({ ...formData, formD: data });
+  };
+  const handleChangeFormD = (data, resetForm) => {
+    dispatch(setFormData({ ...formData, formD: data }));
     resetForm();
-  }
+  };
   return (
     <React.Fragment>
-      {passengerNumber.map((item) => {
-        switch (item) {
+      {passengerNumber.map((number) => {
+        switch (number) {
           case 1:
             return (
               <TicketForm
-                key={item}
+                key={number}
                 onChange={handleChangeFormA}
                 refId={refs.formAref}
-                passengerNumber={item}
+                passengerNumber={number}
                 onRemovePassenger={onRemovePassenger}
               />
             );
           case 2:
             return (
               <TicketForm
-                key={item}
+                key={number}
                 onChange={handleChangeFormB}
                 refId={refs.formBref}
-                passengerNumber={item}
+                passengerNumber={number}
                 onRemovePassenger={onRemovePassenger}
               />
             );
           case 3:
             return (
               <TicketForm
-                key={item}
+                key={number}
                 onChange={handleChangeFormC}
                 refId={refs.formCref}
-                passengerNumber={item}
+                passengerNumber={number}
                 onRemovePassenger={onRemovePassenger}
               />
             );
           case 4:
             return (
               <TicketForm
-                key={item}
+                key={number}
                 onChange={handleChangeFormD}
                 refId={refs.formDref}
-                passengerNumber={item}
+                passengerNumber={number}
                 onRemovePassenger={onRemovePassenger}
                 defaultPassengersCountHandler={defaultPassengersCountHandler}
               />
@@ -160,7 +145,7 @@ const TicketFormContainer = ({
         }
       })}
       <Container>
-        <Message message={messages} />
+        <Message message={message} />
         <Row justify="space-between">
           <Button
             disabled={passengerNumber.length === 4}
