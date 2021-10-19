@@ -6,12 +6,14 @@ const { sendData } = ticketFormAPI;
 export const sendFormData = createAsyncThunk(
   "ticketForm/sendData",
   async function (formData, { rejectWithValue, dispatch }) {
-     
- const response = await sendData(formData).then(data => data ).catch((error) => {
-        return rejectWithValue(error.message);
-    })
-     
-    return response
+    try {
+      const response = await sendData(formData);
+      if (response.statusText !== "OK") {
+        throw new Error("Ошибка сервера. Не удалось отправить данные");
+      }
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
   }
 );
 
@@ -33,12 +35,10 @@ const ticketFormSlice = createSlice({
   },
   reducers: {
     addPassenger: (state, action) => {
-      debugger;
       const length = state.passengers.length;
       length < 4 && state.passengers.push(length + 1);
     },
     removePassenger: (state, action) => {
-      debugger;
       state.passengers = state.passengers.filter(
         (passenger) => passenger !== action.payload.number
       );
@@ -52,11 +52,36 @@ const ticketFormSlice = createSlice({
     setFormData: (state, action) => {
       state.formData = action.payload;
     },
-    extraReducers: (builder) => {
-        builder.addCase(sendFormData.fulfilled, (state, action) => {
-                state.messages = {type:"reponse",text:action.payload}
-
-          })
+    defaultPassengersCount: (state, action) => {
+      state.passengers = [1];
+    },
+  },
+  extraReducers: {
+    [sendFormData.pending]: (state, action) => {
+      state.isSending = true;
+    },
+    [sendFormData.fulfilled]: (state, action) => {
+      state.formData = {
+        formA: { values: null, validated: false },
+        formB: { values: null, validated: false },
+        formC: { values: null, validated: false },
+        formD: { values: null, validated: false },
+      };
+      state.messages = {
+        type: "response",
+        text: "Места успешно зарезервированны!",
+      };
+      state.isSending = false;
+    },
+    [sendFormData.rejected]: (state, action) => {
+      state.formData = {
+        formA: { values: null, validated: false },
+        formB: { values: null, validated: false },
+        formC: { values: null, validated: false },
+        formD: { values: null, validated: false },
+      };
+      state.messages = { type: "error", text: action.payload };
+      state.isSending = false;
     },
   },
 });
@@ -67,6 +92,7 @@ export const {
   isSendToggle,
   setMessage,
   setFormData,
+  defaultPassengersCount,
 } = ticketFormSlice.actions;
 
 export default ticketFormSlice.reducer;

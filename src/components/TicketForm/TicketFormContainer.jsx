@@ -8,7 +8,7 @@ import {
   removePassenger,
   setFormData,
   sendFormData,
-  isSendToggle,
+  defaultPassengersCount,
 } from "../../store/ticketFormSlice";
 
 const TicketFormContainer = () => {
@@ -25,17 +25,12 @@ const TicketFormContainer = () => {
   const onRemovePassenger = (event, number) => {
     dispatch(removePassenger({ number }));
   };
-  const defaultPassengersCountHandler = () => {};
-
-  // const sendDataHandler = (formData) => {
-
-  //   dispatch(sendFormData(formData));
-  // };
+  const defaultPassengersCountHandler = () => {
+    dispatch(defaultPassengersCount());
+  };
   const sendDataHandler = useCallback(
     (formData) => {
-      dispatch(isSendToggle(true))
       dispatch(sendFormData(formData));
-      dispatch(isSendToggle(false))
     },
     [dispatch]
   );
@@ -56,10 +51,8 @@ const TicketFormContainer = () => {
       }
     }
     if (validatedFormCount === passengerNumber.length) {
-
       sendDataHandler(formData);
     }
-    
   }, [formData, passengerNumber.length, sendDataHandler]);
 
   async function handleSubmit() {
@@ -95,6 +88,7 @@ const TicketFormContainer = () => {
     dispatch(setFormData({ ...formData, formD: data }));
     resetForm();
   };
+
   return (
     <React.Fragment>
       {passengerNumber.map((number) => {
