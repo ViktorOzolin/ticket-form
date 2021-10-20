@@ -5,7 +5,6 @@ import { Global } from "./globalStyles";
 import { useSelector } from "react-redux";
 const App = () => {
   const isSending = useSelector((state) => state.ticketForm.isSending);
-
   return (
     <div className="App">
       <Global />

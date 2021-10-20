@@ -20,9 +20,8 @@ const TicketForm = ({
   onChange,
   refId,
   passengerNumber,
-  onRemovePassenger
+  onRemovePassenger,
 }) => {
-
   const formik = useFormik({
     initialValues: {
       isFSS: false,
@@ -148,7 +147,7 @@ const TicketForm = ({
         <Title color="#2d3091">Пассажир №{passengerNumber}</Title>
         <Button
           disabled={passengerNumber === 1}
-          onClick={(event) => onRemovePassenger(event, passengerNumber)}
+          onClick={() => onRemovePassenger(passengerNumber)}
         >
           Удалить пассажира
         </Button>

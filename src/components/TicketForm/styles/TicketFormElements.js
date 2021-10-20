@@ -28,6 +28,7 @@ export const Button = styled.button`
   &:hover {
     background-color: #2d3091;
     color: #f2f2f2;
+    cursor: pointer;
   }
   &: active {
     background-color: #1f2054;

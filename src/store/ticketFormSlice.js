@@ -20,12 +20,7 @@ export const sendFormData = createAsyncThunk(
 const ticketFormSlice = createSlice({
   name: "ticketForm",
   initialState: {
-    formData: {
-      formA: { values: null, validated: false },
-      formB: { values: null, validated: false },
-      formC: { values: null, validated: false },
-      formD: { values: null, validated: false },
-    },
+    formData: {},
     passengers: [1],
     isSending: false,
     messages: {
@@ -36,7 +31,7 @@ const ticketFormSlice = createSlice({
   reducers: {
     addPassenger: (state, action) => {
       const length = state.passengers.length;
-      length < 4 && state.passengers.push(length + 1);
+      state.passengers.push(length + 1);
     },
     removePassenger: (state, action) => {
       state.passengers = state.passengers.filter(
@@ -61,31 +56,21 @@ const ticketFormSlice = createSlice({
       state.isSending = true;
     },
     [sendFormData.fulfilled]: (state, action) => {
-      state.formData = {
-        formA: { values: null, validated: false },
-        formB: { values: null, validated: false },
-        formC: { values: null, validated: false },
-        formD: { values: null, validated: false },
-      };
+      state.formData = {};
       state.messages = {
         type: "response",
         text: "Места успешно зарезервированны!",
       };
       state.isSending = false;
+      state.passengers = [1];
     },
     [sendFormData.rejected]: (state, action) => {
-      state.formData = {
-        formA: { values: null, validated: false },
-        formB: { values: null, validated: false },
-        formC: { values: null, validated: false },
-        formD: { values: null, validated: false },
-      };
+      state.formData = {};
       state.messages = { type: "error", text: action.payload };
       state.isSending = false;
     },
   },
 });
-console.log(ticketFormSlice);
 export const {
   addPassenger,
   removePassenger,
