@@ -37,11 +37,10 @@ const TicketFormContainer = () => {
 
   React.useEffect(() => {
     setRefs((refs) =>
-      Array(passengerNumber.length)
-        .fill()
+      passengerNumber
         .map((_, i) => refs[i] || React.createRef())
     );
-  }, [passengerNumber.length]);
+  }, [passengerNumber]);
 
   React.useEffect(() => {
     let validatedFormCount = 0;
