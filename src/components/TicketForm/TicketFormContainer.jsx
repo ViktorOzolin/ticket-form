@@ -73,7 +73,7 @@ const TicketFormContainer = () => {
       })}
       <Container>
         <Modal message={message} />
-        <Row justify="space-between">
+        <Row justify="space-between" flexDirection="row">
           <Button onClick={onAddPassenger}>Добавить пассажира</Button>
           <Button
             backgroundColor="#4a4ed1"

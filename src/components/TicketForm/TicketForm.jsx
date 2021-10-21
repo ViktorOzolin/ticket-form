@@ -143,14 +143,13 @@ const TicketForm = ({
   };
   return (
     <Container>
-      <Row justify="space-between">
+      <Row justify="space-between" flexDirection="row">
         <Title color="#2d3091">Пассажир №{passengerNumber}</Title>
-        <Button
-          disabled={passengerNumber === 1}
+        {passengerNumber !== 1 && <Button
           onClick={() => onRemovePassenger(passengerNumber)}
         >
           Удалить пассажира
-        </Button>
+        </Button>}
       </Row>
       <Form>
         <Row>

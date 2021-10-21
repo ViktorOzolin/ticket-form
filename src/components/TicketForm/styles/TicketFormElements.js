@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { device } from "../../../consts/mediaConsts";
 
 export const Container = styled.div`
   max-width: 1400px;
@@ -10,6 +11,13 @@ export const Row = styled.div`
   display: flex;
   margin-bottom: 20px;
   justify-content: ${(props) => props.justify};
+  &:nth-child(2) {
+    margin-bottom: 0;
+  }
+  @media ${device.mobileM} {
+    flex-direction: ${props => props.flexDirection || "column"};
+    margin-bottom: 0;
+  }
 `;
 export const Button = styled.button`
   background-color: ${(props) => props.backgroundColor || "#fff"};
@@ -20,7 +28,7 @@ export const Button = styled.button`
   padding: 10px 12px;
   outline: 0;
   border-radius: 4px;
-  width: 20%;
+  // width: 20%;
   cursor: pointer;
   transition: 0.5s;
   text-transform: uppercase;
@@ -29,6 +37,10 @@ export const Button = styled.button`
     background-color: #2d3091;
     color: #f2f2f2;
     cursor: pointer;
+    @media ${device.mobileM} {
+      background-color: #fff;
+      color: #666;
+    }
   }
   &: active {
     background-color: #1f2054;
@@ -39,6 +51,18 @@ export const Button = styled.button`
     border: 1px solid #ededed;
     background-color: #f1f1f1;
     color: #d7d7d7;
+  }
+  @media ${device.tablet} {
+
+  }
+  @media ${device.mobileL} {
+    width: auto;
+  }
+  @media ${device.mobileM} {
+    width: 47%;
+  }
+  @media ${device.mobileS} {
+   
   }
 `;
 export const Title = styled.h1`
@@ -52,8 +76,11 @@ export const Required = styled.span`
 export const RequiredText = styled.span`
   font-size: 11px;
   position: absolute;
-  top: 65px;
+  top: 100%;
   color: red;
+  @media ${device.mobileM} {
+    top: 90%;
+  }
 `;
 export const Form = styled.form`
   width: 100%;
@@ -66,10 +93,14 @@ export const Select = styled.select`
   background-image: none;
   box-shadow: 0px 0px 6px 0px #e3e3e3e8;
   border: ${(props) =>
-    props.error ? "1px solid #ff8a8a" : "1px solid #e9e9e9"};
+    props.error ? "1px solid #ff8a8a" : "1px solid #ddd"};
   &:focus {
     border: ${(props) =>
       props.error ? "1px solid #ff8a8a" : "1px solid #ccc"};
+  }
+  @media ${device.mobileM} {
+    padding: 12px 20px;
+    
   }
 `;
 export const Input = styled.input`
@@ -83,11 +114,14 @@ export const Input = styled.input`
   background-color: #fff;
   box-shadow: 0px 0px 6px 0px #e3e3e3e8;
   border: ${(props) =>
-    props.error ? "1px solid #ff8a8a" : "1px solid #e9e9e9"};
+    props.error ? "1px solid #ff8a8a" : "1px solid #ddd"};
   border-radius: 4px;
   &:focus {
     border: ${(props) =>
       props.error ? "1px solid #ff8a8a" : "1px solid #ccc"};
+  }
+  @media ${device.mobileM} {
+    padding: 10px 20px
   }
 `;
 export const Checkbox = styled.input.attrs({ type: "checkbox" })`
@@ -100,12 +134,16 @@ export const Label = styled.label`
 `;
 export const Field = styled.div`
   display: flex;
-  padding: 0 10px;
+  padding: 0px 10px;
   align-self: flex-end;
   flex-direction: ${(props) => props.direction || "column"};
   width: ${(props) => props.width || "33.33%"};
   border-bottom: ${(props) => props.borderBottom};
   position: relative;
+  @media ${device.mobileM} {
+    width: 100%;
+    padding: 10px;
+  }
 `;
 
 export const DatePicker = styled.input`

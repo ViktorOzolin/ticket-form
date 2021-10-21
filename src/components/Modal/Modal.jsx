@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import { StyledModal } from "./styles/Modal.styled";
 
 const Modal = ({ message }) => {
