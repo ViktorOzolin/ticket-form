@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { device } from "../../../consts/mediaConsts";
 
 export const Container = styled.div`
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   display: ${(props) => props.display};
   padding: 10px;
@@ -60,6 +60,8 @@ export const Button = styled.button`
   }
   @media ${device.mobileM} {
     width: 47%;
+    font-size: 12px;
+    padding: 13px 0px;
   }
   @media ${device.mobileS} {
    
