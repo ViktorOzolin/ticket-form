@@ -389,6 +389,7 @@ const TicketForm = ({
               <Input
                 type="tel"
                 name={`phone`}
+                placeholder="+7**********"
                 value={formik.values.phone}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -403,6 +404,7 @@ const TicketForm = ({
               <Input
                 type="email"
                 name={`email`}
+                placeholder="Введите email"
                 value={formik.values.email}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
