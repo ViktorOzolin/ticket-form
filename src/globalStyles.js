@@ -9,5 +9,6 @@ export const Global = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
     color: #2a2a2a;
   }
+  
 
 `;

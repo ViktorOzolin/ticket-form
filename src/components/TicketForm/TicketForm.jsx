@@ -143,7 +143,7 @@ const TicketForm = ({
   };
   return (
     <Container>
-      <Row justify="space-between" flexDirection="row">
+      <Row justify="space-between" flexDirection="row" height="45px">
         <Title color="#2d3091">Пассажир №{passengerNumber}</Title>
         {passengerNumber !== 1 && <Button
           onClick={() => onRemovePassenger(passengerNumber)}
@@ -172,6 +172,7 @@ const TicketForm = ({
                 type="text"
                 name={`fssNumber`}
                 maxLength="11"
+                placeholder="СНИЛС"
                 value={formik.values.fssNumber}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
@@ -192,6 +193,7 @@ const TicketForm = ({
             <Input
               type="text"
               name={`lastName`}
+              placeholder="Введите фамилию"
               value={formik.values.lastName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -209,6 +211,7 @@ const TicketForm = ({
             <Input
               type="text"
               name={`firstName`}
+              placeholder="Введите имя"
               value={formik.values.firstName}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -226,6 +229,7 @@ const TicketForm = ({
             <Input
               type="text"
               name={`patronymic`}
+              placeholder="Введите отчество"
               value={formik.values.patronymic}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -250,7 +254,7 @@ const TicketForm = ({
               error={hasErrors("gender")}
             >
               <option disabled value="">
-                не выбрано
+                Не выбрано
               </option>
               <option value="male">Мужской</option>
               <option value="female">Женский</option>
@@ -289,7 +293,7 @@ const TicketForm = ({
               error={hasErrors("country")}
             >
               <option disabled value="">
-                не выбрано
+                Не выбрано
               </option>
               <option value="1">Россия</option>
               <option value="2">Казахстан</option>
@@ -329,6 +333,7 @@ const TicketForm = ({
             <Input
               type="text"
               name={`documentNumber`}
+              placeholder="Введите номер документа"
               value={formik.values.documentNumber}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -352,7 +357,7 @@ const TicketForm = ({
               error={hasErrors("fare")}
             >
               <option disabled value="">
-                не выбрано
+                Не выбрано
               </option>
               <option value="1">Полный</option>
               <option value="2">День рождения. Сопровождающий</option>

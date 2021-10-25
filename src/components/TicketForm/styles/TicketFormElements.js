@@ -9,13 +9,11 @@ export const Container = styled.div`
 `;
 export const Row = styled.div`
   display: flex;
+  height: ${(props) => props.height};
   margin-bottom: 20px;
   justify-content: ${(props) => props.justify};
-  &:nth-child(2) {
-    margin-bottom: 0;
-  }
   @media ${device.mobileM} {
-    flex-direction: ${props => props.flexDirection || "column"};
+    flex-direction: ${(props) => props.flexDirection || "column"};
     margin-bottom: 0;
   }
 `;
@@ -53,7 +51,6 @@ export const Button = styled.button`
     color: #d7d7d7;
   }
   @media ${device.tablet} {
-
   }
   @media ${device.mobileL} {
     width: auto;
@@ -64,7 +61,6 @@ export const Button = styled.button`
     padding: 13px 0px;
   }
   @media ${device.mobileS} {
-   
   }
 `;
 export const Title = styled.h1`
@@ -89,41 +85,40 @@ export const Form = styled.form`
 `;
 export const Select = styled.select`
   width: 100%;
-  padding: 9px 12px;
-  border-radius: 4px;
+  height: 45px;
+  padding: 10px 12px;
+  border-radius: 3px;
   background-color: #fff;
   background-image: none;
-  box-shadow: 0px 0px 6px 0px #e3e3e3e8;
-  border: ${(props) =>
-    props.error ? "1px solid #ff8a8a" : "1px solid #ddd"};
+  font-size: 14px;
+  color: #747474;
+  border: ${(props) => (props.error ? "1px solid #ff8a8a" : "1px solid #ddd")};
   &:focus {
     border: ${(props) =>
-      props.error ? "1px solid #ff8a8a" : "1px solid #ccc"};
+      props.error ? "1px solid #ff8a8a" : "2px solid #4a4ed1"};
   }
   @media ${device.mobileM} {
     padding: 12px 20px;
-    
   }
 `;
 export const Input = styled.input`
   display: block;
   width: 100%;
+  height: 45px;
   outline: 0;
-  padding: 7px 20px;
+  padding: 10px 20px;
   font-size: 14px;
   line-height: 1.42857143;
   color: #555;
   background-color: #fff;
-  box-shadow: 0px 0px 6px 0px #e3e3e3e8;
-  border: ${(props) =>
-    props.error ? "1px solid #ff8a8a" : "1px solid #ddd"};
-  border-radius: 4px;
+  border: ${(props) => (props.error ? "1px solid #ff8a8a" : "1px solid #ddd")};
+  border-radius: 3px;
   &:focus {
     border: ${(props) =>
-      props.error ? "1px solid #ff8a8a" : "1px solid #ccc"};
+      props.error ? "1px solid #ff8a8a" : "2px solid #4a4ed1"};
   }
   @media ${device.mobileM} {
-    padding: 10px 20px
+    padding: 10px 20px;
   }
 `;
 export const Checkbox = styled.input.attrs({ type: "checkbox" })`
@@ -148,7 +143,7 @@ export const Field = styled.div`
   }
 `;
 
-export const DatePicker = styled.input`
+export const DatePicker = styled.input.attrs({type: "date"})`
   &::-webkit-datetime-edit-day-field {
     display: none;
   }
